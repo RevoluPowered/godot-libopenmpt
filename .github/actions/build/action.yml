@@ -102,13 +102,29 @@ runs:
           ${{ github.workspace }}/${{ inputs.gdextension-location }}/${{ inputs.scons-cache }}/
           ${{ github.workspace }}/${{ inputs.godot-cpp }}/${{ inputs.scons-cache }}/
         key: ${{ inputs.platform }}_${{ inputs.arch }}_${{ inputs.float-precision }}_${{ inputs.build-target-type }}_cache
-    - name: Compile libopenmpt (unix; yes you macos...)
-      if: ${{ inputs.platform != 'windows' }}
+    - name: Compile libopenmpt (unix)
+      if: ${{ inputs.platform == 'linux' || inputs.platform == 'macos' }}
       shell: bash
-      run:
+      run: |
         cd openmpt/
         make -j2
         make check
+    - name: Compile libopenmpt (mingw)
+      if: ${{ inputs.platform == 'windows' }}
+      shell: bash
+      run: |
+        cd openmpt/
+        make CONFIG=mingw-w64 \
+        MINGW_FLAVOUR=[|-posix|-win32] \
+        WINDOWS_ARCH=[x86|amd64] \
+        WINDOWS_FAMILY=[|desktop-app|app|phone-app|pc-app] \
+        WINDOWS_VERSION=[win95|win98|winme|winnt4|win2000|winxp|winxp64|winvista|win7|win8|win8.1|win10]
+    - name: Compile libopenmpt (webasm)
+      if: ${{ inputs.platform == 'web' }}
+      shell: bash
+      run: |
+        cd openmpt/
+        make CONFIG=emscripten EMSCRIPTEN_TARGET=wasm
 # Build godot-cpp
     - name: Build godot-cpp Debug Build
       shell: sh
