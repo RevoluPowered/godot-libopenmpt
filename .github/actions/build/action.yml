@@ -104,6 +104,7 @@ runs:
         key: ${{ inputs.platform }}_${{ inputs.arch }}_${{ inputs.float-precision }}_${{ inputs.build-target-type }}_cache
     - name: Compile libopenmpt (unix; yes you macos...)
       if: ${{ inputs.platform != 'windows' }}
+      shell: bash
       run:
         cd openmpt/
         make -j2
