@@ -2,3 +2,6 @@
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp.git
 	branch = 4.0
+[submodule "openmpt"]
+	path = openmpt
+	url = git@github.com:OpenMPT/openmpt.git
