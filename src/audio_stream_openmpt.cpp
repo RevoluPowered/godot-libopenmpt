@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/audio_server.hpp>
 #include <libopenmpt/libopenmpt.h>
 #include <cstring>
+#include <vector>
 
 using namespace godot;
 
