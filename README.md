@@ -198,7 +198,9 @@ The project uses [doctest](https://github.com/doctest/doctest) for C++ unit test
 
 ## Documentation
 
-Full documentation is available on [Read the Docs](https://libopenmpt-godot.readthedocs.io/) (configure your Read the Docs project first).
+Full documentation is available at:
+- **[GitHub Pages](https://your-username.github.io/libopenmpt-godot/)** - Automatically built from the `dev` branch
+- **[Read the Docs](https://libopenmpt-godot.readthedocs.io/)** (if configured)
 
 ### Build Documentation Locally
 
