@@ -60,6 +60,12 @@ def build_libopenmpt(target, source, env):
                 "NO_MINIZ=1",
                 "NO_MINIMP3=1",
                 "NO_STBVORBIS=1",
+                "NO_PORTAUDIO=1",
+                "NO_PORTAUDIOCPP=1",
+                "NO_PULSEAUDIO=1",
+                "NO_SDL2=1",
+                "NO_FLAC=1",
+                "NO_SNDFILE=1",
             ]
 
             # Add architecture-specific flags via environment
@@ -117,7 +123,20 @@ def build_libopenmpt(target, source, env):
             "NO_MINIZ=1",
             "NO_MINIMP3=1",
             "NO_STBVORBIS=1",
+            "NO_PORTAUDIO=1",
+            "NO_PORTAUDIOCPP=1",
+            "NO_PULSEAUDIO=1",
+            "NO_SDL2=1",
+            "NO_FLAC=1",
+            "NO_SNDFILE=1",
         ]
+
+        # Add Windows architecture specification
+        if env["platform"] == "windows":
+            if env.get("arch") == "x86_64":
+                build_cmd.append("WINDOWS_ARCH=amd64")
+            elif env.get("arch") == "x86_32":
+                build_cmd.append("WINDOWS_ARCH=x86")
 
         if env["target"] == "template_debug":
             build_cmd.append("DEBUG=1")
