@@ -200,13 +200,31 @@ The project uses [doctest](https://github.com/doctest/doctest) for C++ unit test
 
 Full documentation is available on [Read the Docs](https://libopenmpt-godot.readthedocs.io/) (configure your Read the Docs project first).
 
-Build documentation locally:
+### Build Documentation Locally
+
+**Option 1: Using Docker (Recommended)**
+
+```bash
+cd docs
+./build.sh
+```
+
+Or manually with docker-compose:
+
+```bash
+cd docs
+docker-compose up --build
+```
+
+**Option 2: Manual Build**
 
 ```bash
 cd docs
 pip install -r requirements.txt
 make html
 ```
+
+Open `docs/build/html/index.html` in your browser to view the documentation.
 
 The documentation includes:
 - Getting Started Guide

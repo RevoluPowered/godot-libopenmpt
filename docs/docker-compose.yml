@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./source:/docs/source
+      - ./build:/docs/build
+    command: make html
