@@ -3,8 +3,16 @@ name: Build and Deploy Documentation
 on:
   push:
     branches: [ dev ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - 'README.md'
   pull_request:
     branches: [ dev ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - 'README.md'
   workflow_dispatch:
 
 permissions:
