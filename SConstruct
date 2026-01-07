@@ -9,12 +9,18 @@ env = SConscript("godot-cpp/SConstruct")
 env.Append(CPPPATH=["src/", "libopenmpt/"])
 
 # Determine libopenmpt build target
-libopenmpt_config = "macos" if env["platform"] == "macos" else "gcc"
+if env["platform"] == "macos":
+    libopenmpt_config = "macos"
+elif env["platform"] == "windows":
+    libopenmpt_config = "mingw-w64"
+else:
+    libopenmpt_config = "gcc"
+
 libopenmpt_target = "debug" if env["target"] == "template_debug" else "release"
 
 # Build libopenmpt library if it doesn't exist
 libopenmpt_lib_dir = "libopenmpt/bin"
-libopenmpt_lib_name = "libopenmpt.a" if env["platform"] != "windows" else "libopenmpt.lib"
+libopenmpt_lib_name = "libopenmpt.a"  # MinGW uses .a files like Unix
 libopenmpt_lib_path = os.path.join(libopenmpt_lib_dir, libopenmpt_lib_name)
 
 def build_libopenmpt(target, source, env):
@@ -154,6 +160,8 @@ if env["platform"] == "macos":
     env.Append(LIBS=["c++"])
 elif env["platform"] == "linux":
     env.Append(LIBS=["stdc++"])
+elif env["platform"] == "windows":
+    env.Append(LIBS=["stdc++"])
 
 # Add our GDExtension source files
 sources = Glob("src/*.cpp")
@@ -161,31 +169,28 @@ sources = Glob("src/*.cpp")
 # Check if tests should be built
 build_tests = ARGUMENTS.get("tests", "no") == "yes"
 
+# Prepare source list
+lib_sources = list(sources)
 if build_tests:
-    # Build unit tests
-    test_env = env.Clone()
-    test_env.Append(CPPPATH=["tests/doctest"])
+    # Enable tests in the build
+    env.Append(CPPDEFINES=["TESTS_ENABLED"])
+    env.Append(CPPPATH=["tests/doctest"])
 
-    test_sources = Glob("tests/*.cpp")
-    test_program = test_env.Program(
-        "tests/run_tests",
-        source=test_sources + sources
+    # Add test interface sources
+    lib_sources.extend(["tests/test_interface.cpp", "tests/test_audio_stream.cpp"])
+
+# Create the library
+if env["platform"] == "macos":
+    library = env.SharedLibrary(
+        "demo/bin/libopenmpt.{}.{}.framework/libopenmpt.{}.{}".format(
+            env["platform"], env["target"], env["platform"], env["target"]
+        ),
+        source=lib_sources,
+    )
+else:
+    library = env.SharedLibrary(
+        "demo/bin/libopenmpt{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        source=lib_sources,
     )
 
-    Default(test_program)
-else:
-    # Create the library
-    if env["platform"] == "macos":
-        library = env.SharedLibrary(
-            "demo/bin/libopenmpt.{}.{}.framework/libopenmpt.{}.{}".format(
-                env["platform"], env["target"], env["platform"], env["target"]
-            ),
-            source=sources,
-        )
-    else:
-        library = env.SharedLibrary(
-            "demo/bin/libopenmpt{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
-            source=sources,
-        )
-
-    Default(library)
+Default(library)
