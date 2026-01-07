@@ -2,6 +2,10 @@
 #include "audio_stream_openmpt.h"
 #include "resource_loader_openmpt.h"
 
+#ifdef TESTS_ENABLED
+#include "../tests/test_interface.h"
+#endif
+
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -20,6 +24,10 @@ void initialize_libopenmpt_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<AudioStreamOpenMPT>();
     ClassDB::register_class<AudioStreamPlaybackOpenMPT>();
     ClassDB::register_class<ResourceLoaderOpenMPT>();
+
+#ifdef TESTS_ENABLED
+    ClassDB::register_class<TestRunner>();
+#endif
 
     resource_loader_openmpt.instantiate();
     ResourceLoader::get_singleton()->add_resource_format_loader(resource_loader_openmpt);

@@ -15,14 +15,10 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install dependencies
+      - name: Build and run tests in Docker
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential scons pkg-config libflac-dev
-
-      - name: Build unit tests
-        run: |
-          scons target=template_debug arch=x86_64 tests=yes -j$(nproc)
+          docker build -f tests/Dockerfile -t libopenmpt-godot-tests .
+          docker run --rm libopenmpt-godot-tests
 
   build-linux:
     runs-on: ubuntu-latest
@@ -61,8 +57,15 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup MSVC
-        uses: microsoft/setup-msbuild@v2
+      - name: Setup MinGW-w64
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-make
+            make
 
       - name: Setup Python and SCons
         uses: actions/setup-python@v5
@@ -74,8 +77,8 @@ jobs:
         shell: bash
 
       - name: Build libopenmpt-godot
+        shell: msys2 {0}
         run: scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$(nproc)
-        shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

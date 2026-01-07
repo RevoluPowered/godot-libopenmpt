@@ -1,0 +1,15 @@
+; Engine configuration file.
+
+config_version=5
+
+[application]
+
+config/name="libopenmpt-godot Tests"
+run/main_scene="res://test_runner.gd"
+config/features=PackedStringArray("4.2")
+
+[display]
+
+window/size/viewport_width=100
+window/size/viewport_height=100
+window/size/mode=2
