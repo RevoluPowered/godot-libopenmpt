@@ -65,16 +65,13 @@ jobs:
           install: >-
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-make
+            mingw-w64-x86_64-python
+            mingw-w64-x86_64-python-pip
             make
 
-      - name: Setup Python and SCons
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install SCons
+      - name: Install SCons in MSYS2
+        shell: msys2 {0}
         run: pip install scons
-        shell: bash
 
       - name: Build libopenmpt-godot
         shell: msys2 {0}

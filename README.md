@@ -1,6 +1,17 @@
 # libopenmpt-godot
 
-A Godot GDExtension wrapper for libopenmpt, enabling playback of tracker music formats.
+Play tracker music files in your Godot 4 game.
+
+## What is Tracker Music?
+
+Tracker music is a type of music file format that was super popular in old DOS games, Amiga games, and the demoscene. Instead of storing audio like MP3s do, tracker files store patterns of notes and samples - kind of like MIDI but with the instruments built-in. This makes them tiny in size but still sound great!
+
+**Supported formats:** MOD, XM, S3M, IT, MPTM, and 40+ other formats
+
+**Famous games that used tracker music:**
+- Unreal (1998) - used .umx files (actually .it files)
+- Deus Ex - used tracker music
+- Many DOS games from the 90s
 
 ## Building
 
