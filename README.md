@@ -32,17 +32,6 @@ Done! Skip to the "How to Use" section below.
 
 ### Build It Yourself
 
-#### Using Docker (Recommended if you know Docker)
-
-```bash
-git clone --recursive https://github.com/RevoluPowered/libopenmpt-godot.git
-cd libopenmpt-godot
-docker build -f tests/Dockerfile -t libopenmpt-build .
-docker run --rm -v $(pwd):/workspace libopenmpt-build scons target=template_release
-```
-
-Your files will be in `demo/bin/`.
-
 #### Building Manually
 
 **What you need:**
