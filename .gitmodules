@@ -1,0 +1,9 @@
+[submodule "godot-cpp"]
+	path = godot-cpp
+	url = https://github.com/godotengine/godot-cpp
+[submodule "libopenmpt"]
+	path = libopenmpt
+	url = https://github.com/OpenMPT/openmpt.git
+[submodule "tests/doctest"]
+	path = tests/doctest
+	url = https://github.com/doctest/doctest.git
