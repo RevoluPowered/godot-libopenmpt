@@ -91,7 +91,7 @@ jobs:
 
       - name: Build libopenmpt-godot
         shell: msys2 {0}
-        run: scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$(nproc)
+        run: scons target=${{ matrix.target }} arch=${{ matrix.arch }} use_mingw=yes -j$(nproc)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
