@@ -4,7 +4,7 @@
 [![Documentation](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/docs.yml/badge.svg)](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/docs.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**[📖 Documentation](https://revolutpowered.github.io/godot-libopenmpt)** | **[🎵 Download](https://github.com/RevoluPowered/godot-libopenmpt/releases)**
+**[📖 Documentation](https://revolupowered.github.io/godot-libopenmpt/)** | **[🎵 Download](https://github.com/RevoluPowered/godot-libopenmpt/releases)**
 
 Play tracker music files in your Godot 4 game.
 
