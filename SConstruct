@@ -144,8 +144,13 @@ def build_libopenmpt(target, source, env):
             build_cmd.append("DEBUG=0")
             build_cmd.append("OPTIMIZE=speed")
 
+        # Set up environment variables for the build
+        env_vars = os.environ.copy()
+        if env["platform"] == "windows":
+            env_vars['AR'] = 'ar'
+
         print(f"Building libopenmpt: {' '.join(build_cmd)}")
-        result = subprocess.run(build_cmd, capture_output=False)
+        result = subprocess.run(build_cmd, capture_output=False, env=env_vars)
 
         if result.returncode != 0:
             print("ERROR: Failed to build libopenmpt")
