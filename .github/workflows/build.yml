@@ -71,10 +71,11 @@ jobs:
 
       - name: Install SCons
         run: pip install scons
+        shell: bash
 
       - name: Build libopenmpt-godot
-        run: |
-          scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$env:NUMBER_OF_PROCESSORS
+        run: scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$(nproc)
+        shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
