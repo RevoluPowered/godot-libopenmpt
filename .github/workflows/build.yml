@@ -2,9 +2,7 @@ name: Build libopenmpt-godot
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ dev ]
   release:
     types: [ created ]
 
