@@ -1,0 +1,151 @@
+name: Build libopenmpt-godot
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [ created ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential scons pkg-config libflac-dev
+
+      - name: Build unit tests
+        run: |
+          scons target=template_debug arch=x86_64 tests=yes -j$(nproc)
+
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64]
+        target: [template_debug, template_release]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential scons pkg-config libflac-dev
+
+      - name: Build libopenmpt-godot
+        run: |
+          scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$(nproc)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libopenmpt-godot-linux-${{ matrix.arch }}-${{ matrix.target }}
+          path: demo/bin/*.so
+
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        arch: [x86_64]
+        target: [template_debug, template_release]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup MSVC
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup Python and SCons
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install SCons
+        run: pip install scons
+
+      - name: Build libopenmpt-godot
+        run: |
+          scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$env:NUMBER_OF_PROCESSORS
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libopenmpt-godot-windows-${{ matrix.arch }}-${{ matrix.target }}
+          path: demo/bin/*.dll
+
+  build-macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [universal]
+        target: [template_debug, template_release]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          brew install scons pkg-config flac
+
+      - name: Build libopenmpt-godot
+        run: |
+          scons target=${{ matrix.target }} arch=${{ matrix.arch }} -j$(sysctl -n hw.ncpu)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libopenmpt-godot-macos-${{ matrix.arch }}-${{ matrix.target }}
+          path: demo/bin/*.framework
+
+  package-release:
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Package release
+        run: |
+          mkdir -p release/addons/libopenmpt/bin
+
+          # Copy gdextension file
+          cp demo/bin/libopenmpt.gdextension release/addons/libopenmpt/bin/
+
+          # Copy all built libraries
+          find artifacts -type f \( -name "*.so" -o -name "*.dll" \) -exec cp {} release/addons/libopenmpt/bin/ \;
+          find artifacts -type d -name "*.framework" -exec cp -r {} release/addons/libopenmpt/bin/ \;
+
+          # Copy README and LICENSE
+          cp README.md release/addons/libopenmpt/
+          if [ -f LICENSE ]; then cp LICENSE release/addons/libopenmpt/; fi
+
+          # Create archive
+          cd release
+          zip -r ../libopenmpt-godot-${{ github.event.release.tag_name }}.zip addons/
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./libopenmpt-godot-${{ github.event.release.tag_name }}.zip
+          asset_name: libopenmpt-godot-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
