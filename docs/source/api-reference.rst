@@ -125,18 +125,6 @@ Names and Lists
 
    :return: Array of channel names
 
-.. py:method:: get_order_names() -> PackedStringArray
-
-   Get all order names.
-
-   :return: Array of order names
-
-.. py:method:: get_pattern_names() -> PackedStringArray
-
-   Get all pattern names.
-
-   :return: Array of pattern names
-
 .. py:method:: get_instrument_names() -> PackedStringArray
 
    Get all instrument names.

@@ -1,5 +1,11 @@
 # libopenmpt-godot
 
+[![Build Status](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/build.yml/badge.svg)](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/build.yml)
+[![Documentation](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/docs.yml/badge.svg)](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/docs.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**[📖 Documentation](https://revolutpowered.github.io/libopenmpt-godot/)** | **[🎵 Download](https://github.com/RevoluPowered/libopenmpt-godot/releases)**
+
 Play tracker music files in your Godot 4 game.
 
 ## What is Tracker Music?
@@ -13,288 +19,183 @@ Tracker music is a type of music file format that was super popular in old DOS g
 - Deus Ex - used tracker music
 - Many DOS games from the 90s
 
-## Building
+## How to Get It
 
-### Prerequisites
-- Python 3.6+
-- SCons 4.0+
-- C++17 compatible compiler
-- Git
+### Download (Easiest!)
 
-### Build Steps
+1. Go to [Releases](https://github.com/RevoluPowered/libopenmpt-godot/releases) and download the latest version
+2. Unzip it
+3. Copy the `addons/libopenmpt/` folder into your Godot project
+4. Restart Godot
 
-1. Initialize and update the godot-cpp submodule:
+Done! Skip to the "How to Use" section below.
+
+### Build It Yourself
+
+#### Using Docker (Recommended if you know Docker)
+
 ```bash
-git submodule update --init --recursive
+git clone --recursive https://github.com/RevoluPowered/libopenmpt-godot.git
+cd libopenmpt-godot
+docker build -f tests/Dockerfile -t libopenmpt-build .
+docker run --rm -v $(pwd):/workspace libopenmpt-build scons target=template_release
 ```
 
-2. Build the extension:
-```bash
-# Debug build
-scons target=template_debug
+Your files will be in `demo/bin/`.
 
-# Release build
+#### Building Manually
+
+**What you need:**
+- Python 3
+- A C++ compiler (Visual Studio on Windows, Xcode on Mac, gcc on Linux)
+- Git
+
+**Steps:**
+
+```bash
+# 1. Download the code
+git clone --recursive https://github.com/RevoluPowered/libopenmpt-godot.git
+cd libopenmpt-godot
+
+# 2. Install the build tool
+pip install scons
+
+# 3. Build it
 scons target=template_release
 ```
 
-The compiled library will be placed in `demo/bin/`.
+Files will appear in `demo/bin/`.
 
-### Platform-specific builds
+#### Copy Plugin to Your Game
+
+After building, copy it to your project:
 
 ```bash
-# macOS
-scons platform=macos
-
-# Windows
-scons platform=windows
-
-# Linux
-scons platform=linux
+mkdir -p MyGame/addons/libopenmpt/
+cp -r demo/bin/* MyGame/addons/libopenmpt/
 ```
 
-## Usage
+(Replace `MyGame` with your actual project folder name)
 
-The extension provides a complete API for playing tracker music files (MOD, XM, S3M, IT, and many more formats).
+## How to Use
 
-### Basic Example
+### Simple Example - Just Play Music!
 
 ```gdscript
-# Create and load a module
+# Load a tracker file
 var stream = AudioStreamOpenMPT.new()
-stream.load_from_file("res://music/song.mod")
+stream.load_from_file("res://music/cool_song.mod")
 
-# Play using AudioStreamPlayer
+# Play it like any other audio
 var player = AudioStreamPlayer.new()
 add_child(player)
 player.stream = stream
 player.play()
 ```
 
-### Advanced Playback Control
+That's it! Your tracker music is now playing.
 
+### Cool Stuff You Can Do
+
+**Speed up or slow down the music:**
 ```gdscript
-# Get the playback object for real-time control
-var playback = player.get_stream_playback() as AudioStreamPlaybackOpenMPT
-
-# Control tempo and pitch
-playback.set_tempo_factor(1.5)  # Play 50% faster
-playback.set_pitch_factor(1.2)  # Pitch up
-
-# Loop control
-playback.set_repeat_count(-1)   # Loop forever
-playback.set_repeat_count(2)    # Play 2 times
-
-# Pattern navigation
-playback.set_position_order_row(4, 0)  # Jump to order 4, row 0
-print("Current pattern: ", playback.get_current_pattern())
-print("Current row: ", playback.get_current_row())
+var playback = player.get_stream_playback()
+playback.set_tempo_factor(1.5)  # 50% faster
+playback.set_tempo_factor(0.5)  # Half speed
 ```
 
-### Module Information
+**Change the pitch:**
+```gdscript
+playback.set_pitch_factor(1.5)  # Higher pitch
+playback.set_pitch_factor(0.8)  # Lower pitch
+```
+
+**Loop the music:**
+```gdscript
+playback.set_repeat_count(-1)  # Loop forever
+playback.set_repeat_count(3)   # Play 3 times then stop
+```
+
+**Jump around in the song:**
+```gdscript
+playback.set_position_order_row(4, 0)  # Jump to a specific part
+print("Now at pattern: ", playback.get_current_pattern())
+```
+
+### Get Info About the Music
 
 ```gdscript
-# Get metadata
-print("Title: ", stream.get_title())
-print("Artist: ", stream.get_artist())
-print("Message: ", stream.get_message())
-print("Duration: ", stream.get_length(), " seconds")
-print("BPM: ", stream.get_bpm())
-
-# Get module structure info
-print("Channels: ", stream.get_num_channels())
-print("Patterns: ", stream.get_num_patterns())
-print("Orders: ", stream.get_num_orders())
+print("Song title: ", stream.get_title())
+print("Made by: ", stream.get_artist())
+print("Length: ", stream.get_length(), " seconds")
 print("Instruments: ", stream.get_num_instruments())
-print("Samples: ", stream.get_num_samples())
 
-# List all instruments
+# List all instruments in the song
 var instruments = stream.get_instrument_names()
-for i in instruments.size():
-    print("Instrument ", i, ": ", instruments[i])
-
-# Also available:
-# stream.get_sample_names()
-# stream.get_channel_names()
-# stream.get_pattern_names()
-# stream.get_order_names()
+for i in range(instruments.size()):
+    print(i, ": ", instruments[i])
 ```
 
-### Loading from Memory
+## Where to Find Tracker Music
 
-```gdscript
-# Load from PackedByteArray
-var file = FileAccess.open("res://music/song.xm", FileAccess.READ)
-var data = file.get_buffer(file.get_length())
-file.close()
+- [Mod Archive](https://modarchive.org/) - Huge collection of free tracker music
+- [The Mod Archive API](https://modarchive.org/index.php?request=view_by_moduleid&query=176219) - Random module feature
+- Your own creations using [OpenMPT](https://openmpt.org/) or [MilkyTracker](https://milkytracker.org/)
 
-var stream = AudioStreamOpenMPT.new()
-stream.load_from_data(data)
-```
+## Full Documentation
 
-## API Reference
+For complete API reference and advanced features, check the [documentation](https://github.com/RevoluPowered/libopenmpt-godot/tree/dev/docs)
 
-### AudioStreamOpenMPT
+## For Developers
 
-Main resource class for tracker modules. Extends `AudioStream`.
-
-#### Properties
-
-- `PackedByteArray data` - The module file data
-- `int mix_rate` - Sample rate for playback (default: 48000)
-
-#### Methods
-
-**Loading:**
-- `Error load_from_file(String path)` - Load module from file
-- `Error load_from_data(PackedByteArray data)` - Load module from memory
-
-**Metadata:**
-- `String get_title()` - Get module title
-- `String get_artist()` - Get artist/author name
-- `String get_message()` - Get module message/comments
-- `float get_length()` - Get duration in seconds
-- `float get_bpm()` - Get current tempo
-
-**Module Structure:**
-- `int get_num_channels()` - Get number of channels
-- `int get_num_orders()` - Get number of orders in the sequence
-- `int get_num_patterns()` - Get number of patterns
-- `int get_num_instruments()` - Get number of instruments
-- `int get_num_samples()` - Get number of samples
-
-**Names/Lists:**
-- `PackedStringArray get_channel_names()` - Get all channel names
-- `PackedStringArray get_order_names()` - Get all order names
-- `PackedStringArray get_pattern_names()` - Get all pattern names
-- `PackedStringArray get_instrument_names()` - Get all instrument names
-- `PackedStringArray get_sample_names()` - Get all sample names
-
-### AudioStreamPlaybackOpenMPT
-
-Playback control class. Extends `AudioStreamPlayback`.
-
-#### Methods
-
-**Playback Control:**
-- `void set_position(float position)` - Seek to position in seconds
-- `float get_position()` - Get current playback position
-- `void set_repeat_count(int count)` - Set loop count (-1 for infinite)
-- `int get_repeat_count()` - Get current loop count
-
-**Real-time Effects:**
-- `void set_tempo_factor(float factor)` - Change playback speed (1.0 = normal)
-- `float get_tempo_factor()` - Get current tempo factor
-- `void set_pitch_factor(float factor)` - Change pitch (1.0 = normal)
-- `float get_pitch_factor()` - Get current pitch factor
-
-**Pattern Navigation:**
-- `int get_current_order()` - Get current order index
-- `int get_current_pattern()` - Get current pattern index
-- `int get_current_row()` - Get current row in pattern
-- `void set_position_order_row(int order, int row)` - Jump to specific order and row
-
-## Testing
-
-Build and run unit tests:
+### Running Tests
 
 ```bash
-# Build tests
-scons tests=yes target=template_debug
+docker build -f tests/Dockerfile -t libopenmpt-tests .
+docker run --rm libopenmpt-tests
+```
 
-# Run tests
+Or manually:
+
+```bash
+scons tests=yes target=template_debug
 ./tests/run_tests
 ```
 
-The project uses [doctest](https://github.com/doctest/doctest) for C++ unit testing.
-
-## Documentation
-
-Full documentation is available at:
-- **[GitHub Pages](https://your-username.github.io/libopenmpt-godot/)** - Automatically built from the `dev` branch
-- **[Read the Docs](https://libopenmpt-godot.readthedocs.io/)** (if configured)
-
-### Build Documentation Locally
-
-**Option 1: Using Docker (Recommended)**
-
-```bash
-cd docs
-./build.sh
-```
-
-Or manually with docker-compose:
+### Building Documentation
 
 ```bash
 cd docs
 docker-compose up --build
-```
-
-**Option 2: Manual Build**
-
-```bash
-cd docs
-pip install -r requirements.txt
-make html
-```
-
-Open `docs/build/html/index.html` in your browser to view the documentation.
-
-The documentation includes:
-- Getting Started Guide
-- Complete API Reference
-- Usage Examples
-- Building Instructions
-- Testing Guide
-
-## Supported Formats
-
-libopenmpt supports a wide variety of tracker formats including:
-- MOD (ProTracker, NoiseTracker, etc.)
-- XM (FastTracker II)
-- S3M (ScreamTracker 3)
-- IT (Impulse Tracker)
-- MPTM (OpenMPT)
-- And many more legacy formats
-
-For a complete list, see the [libopenmpt documentation](https://lib.openmpt.org/libopenmpt/).
-
-## Project Structure
-
-```
-libopenmpt-godot/
-├── src/                          # C++ source files
-│   ├── register_types.cpp        # Extension registration
-│   ├── register_types.h
-│   ├── audio_stream_openmpt.cpp  # AudioStream implementation
-│   ├── audio_stream_openmpt.h
-│   ├── openmpt_player.cpp        # Optional Node wrapper
-│   └── openmpt_player.h
-├── tests/                        # Unit tests
-│   ├── doctest/                  # doctest framework (submodule)
-│   ├── test_main.cpp             # Test runner
-│   └── test_audio_stream.cpp     # AudioStream tests
-├── docs/                         # Sphinx documentation
-│   ├── source/                   # Documentation source files
-│   ├── requirements.txt          # Python dependencies for docs
-│   └── Makefile                  # Documentation build system
-├── demo/
-│   └── bin/                      # Compiled libraries and .gdextension file
-├── godot-cpp/                    # Godot C++ bindings (submodule)
-├── libopenmpt/                   # libopenmpt library (submodule)
-├── SConstruct                    # Build configuration
-└── .readthedocs.yml              # Read the Docs configuration
+# Or: pip install -r requirements.txt && make html
 ```
 
 ## Contributing
 
-Contributions are welcome! Please:
+Found a bug? Want to add a feature?
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests: `scons tests=yes && ./tests/run_tests`
-5. Submit a pull request
+1. Fork this repo
+2. Make your changes
+3. Test it: `scons tests=yes && ./tests/run_tests`
+4. Submit a pull request
+
+## What File Formats Work?
+
+This plugin supports 50+ tracker formats through libopenmpt:
+
+**Popular formats:**
+- `.mod` - Original Amiga ProTracker
+- `.xm` - FastTracker II
+- `.s3m` - ScreamTracker 3
+- `.it` - Impulse Tracker
+- `.mptm` - OpenMPT
+
+**And many more:** `.669`, `.amf`, `.ams`, `.dbm`, `.digi`, `.dmf`, `.dsm`, `.dtm`, `.far`, `.gdm`, `.ice`, `.imf`, `.j2b`, `.m15`, `.mdl`, `.med`, `.mo3`, `.mt2`, `.mtm`, `.okt`, `.plm`, `.psm`, `.ptm`, `.sfx`, `.st26`, `.stk`, `.stm`, `.ult`, `.umx`, `.wow`
+
+See the [libopenmpt website](https://lib.openmpt.org/libopenmpt/) for the complete list.
 
 ## License
 
-This project integrates libopenmpt which is licensed under the BSD license. See the libopenmpt repository for details.
+This plugin is licensed under the MIT License - see the [LICENSE](LICENSE) file.
+
+This project uses libopenmpt, which is licensed under the BSD license. See the [libopenmpt repository](https://github.com/OpenMPT/openmpt) for details.
