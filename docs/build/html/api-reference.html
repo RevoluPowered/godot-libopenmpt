@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; libopenmpt-godot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Getting Started" href="getting-started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            libopenmpt-godot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#audiostreamopenmpt">AudioStreamOpenMPT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mix_rate"><code class="docutils literal notranslate"><span class="pre">mix_rate</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#loading">Loading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metadata">Metadata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-structure">Module Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#names-and-lists">Names and Lists</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#audiostreamplaybackopenmpt">AudioStreamPlaybackOpenMPT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#playback-control">Playback Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#real-time-effects">Real-time Effects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pattern-navigation">Pattern Navigation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#inherited-methods">Inherited Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building from Source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">libopenmpt-godot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api-reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<section id="audiostreamopenmpt">
+<h2>AudioStreamOpenMPT<a class="headerlink" href="#audiostreamopenmpt" title="Link to this heading"></a></h2>
+<p>Main resource class for tracker modules. Extends Godot’s <code class="docutils literal notranslate"><span class="pre">AudioStream</span></code> class.</p>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Link to this heading"></a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PackedByteArray</span></em><a class="headerlink" href="#data" title="Link to this definition"></a></dt>
+<dd><p>The raw module file data. Setting this property will attempt to load the module.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mix_rate">
+<span class="sig-name descname"><span class="pre">mix_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mix_rate" title="Link to this definition"></a></dt>
+<dd><p>Sample rate for playback in Hz. Default is 48000.</p>
+</dd></dl>
+
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<section id="loading">
+<h4>Loading<a class="headerlink" href="#loading" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_from_file">
+<span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">String</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Error</span></span></span><a class="headerlink" href="#load_from_file" title="Link to this definition"></a></dt>
+<dd><p>Load a module from a file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the module file (e.g., “<a class="reference external" href="res://music/song.mod">res://music/song.mod</a>”)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>OK on success, or an error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Error</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AudioStreamOpenMPT</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="k">var</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="s2">&quot;res://music/song.mod&quot;</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">OK</span><span class="p">:</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Module loaded successfully!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="load_from_data">
+<span class="sig-name descname"><span class="pre">load_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PackedByteArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Error</span></span></span><a class="headerlink" href="#load_from_data" title="Link to this definition"></a></dt>
+<dd><p>Load a module from raw byte data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Module file data as PackedByteArray</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>OK on success, ERR_INVALID_DATA if the data is invalid</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Error</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="metadata">
+<h4>Metadata<a class="headerlink" href="#metadata" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="get_title">
+<span class="sig-name descname"><span class="pre">get_title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">String</span></span></span><a class="headerlink" href="#get_title" title="Link to this definition"></a></dt>
+<dd><p>Get the module title from metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module title, or empty string if not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_artist">
+<span class="sig-name descname"><span class="pre">get_artist</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">String</span></span></span><a class="headerlink" href="#get_artist" title="Link to this definition"></a></dt>
+<dd><p>Get the artist/author name from metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Artist name, or empty string if not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_message">
+<span class="sig-name descname"><span class="pre">get_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">String</span></span></span><a class="headerlink" href="#get_message" title="Link to this definition"></a></dt>
+<dd><p>Get the module message/comments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module message, or empty string if not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_length">
+<span class="sig-name descname"><span class="pre">get_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#get_length" title="Link to this definition"></a></dt>
+<dd><p>Get the module duration in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Duration in seconds</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_bpm">
+<span class="sig-name descname"><span class="pre">get_bpm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#get_bpm" title="Link to this definition"></a></dt>
+<dd><p>Get the current tempo (beats per minute).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BPM value</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-structure">
+<h4>Module Structure<a class="headerlink" href="#module-structure" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="get_num_channels">
+<span class="sig-name descname"><span class="pre">get_num_channels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_num_channels" title="Link to this definition"></a></dt>
+<dd><p>Get the number of channels in the module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of channels</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_num_orders">
+<span class="sig-name descname"><span class="pre">get_num_orders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_num_orders" title="Link to this definition"></a></dt>
+<dd><p>Get the number of orders in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of orders</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_num_patterns">
+<span class="sig-name descname"><span class="pre">get_num_patterns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_num_patterns" title="Link to this definition"></a></dt>
+<dd><p>Get the number of patterns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of patterns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_num_instruments">
+<span class="sig-name descname"><span class="pre">get_num_instruments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_num_instruments" title="Link to this definition"></a></dt>
+<dd><p>Get the number of instruments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of instruments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_num_samples">
+<span class="sig-name descname"><span class="pre">get_num_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_num_samples" title="Link to this definition"></a></dt>
+<dd><p>Get the number of samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of samples</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="names-and-lists">
+<h4>Names and Lists<a class="headerlink" href="#names-and-lists" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="get_channel_names">
+<span class="sig-name descname"><span class="pre">get_channel_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PackedStringArray</span></span></span><a class="headerlink" href="#get_channel_names" title="Link to this definition"></a></dt>
+<dd><p>Get all channel names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of channel names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_order_names">
+<span class="sig-name descname"><span class="pre">get_order_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PackedStringArray</span></span></span><a class="headerlink" href="#get_order_names" title="Link to this definition"></a></dt>
+<dd><p>Get all order names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of order names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_pattern_names">
+<span class="sig-name descname"><span class="pre">get_pattern_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PackedStringArray</span></span></span><a class="headerlink" href="#get_pattern_names" title="Link to this definition"></a></dt>
+<dd><p>Get all pattern names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of pattern names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_instrument_names">
+<span class="sig-name descname"><span class="pre">get_instrument_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PackedStringArray</span></span></span><a class="headerlink" href="#get_instrument_names" title="Link to this definition"></a></dt>
+<dd><p>Get all instrument names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of instrument names</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">instruments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stream</span><span class="o">.</span><span class="n">get_instrument_names</span><span class="p">()</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">instruments</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Instrument &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">instruments</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_sample_names">
+<span class="sig-name descname"><span class="pre">get_sample_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PackedStringArray</span></span></span><a class="headerlink" href="#get_sample_names" title="Link to this definition"></a></dt>
+<dd><p>Get all sample names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of sample names</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="audiostreamplaybackopenmpt">
+<h2>AudioStreamPlaybackOpenMPT<a class="headerlink" href="#audiostreamplaybackopenmpt" title="Link to this heading"></a></h2>
+<p>Playback control class. Extends Godot’s <code class="docutils literal notranslate"><span class="pre">AudioStreamPlayback</span></code> class. Access this via <code class="docutils literal notranslate"><span class="pre">AudioStreamPlayer.get_stream_playback()</span></code>.</p>
+<section id="id1">
+<h3>Methods<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<section id="playback-control">
+<h4>Playback Control<a class="headerlink" href="#playback-control" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#set_position" title="Link to this definition"></a></dt>
+<dd><p>Seek to a specific position in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>position</strong> – Position in seconds</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#get_position" title="Link to this definition"></a></dt>
+<dd><p>Get the current playback position in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current position</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="set_repeat_count">
+<span class="sig-name descname"><span class="pre">set_repeat_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#set_repeat_count" title="Link to this definition"></a></dt>
+<dd><p>Set the loop count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> – Number of times to repeat (-1 for infinite loop, 0 for no repeat)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_repeat_count">
+<span class="sig-name descname"><span class="pre">get_repeat_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_repeat_count" title="Link to this definition"></a></dt>
+<dd><p>Get the current loop count setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Loop count</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="real-time-effects">
+<h4>Real-time Effects<a class="headerlink" href="#real-time-effects" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="set_tempo_factor">
+<span class="sig-name descname"><span class="pre">set_tempo_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#set_tempo_factor" title="Link to this definition"></a></dt>
+<dd><p>Change the playback speed without affecting pitch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>factor</strong> – Tempo multiplier (1.0 = normal, 2.0 = double speed, 0.5 = half speed)</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">playback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">get_stream_playback</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AudioStreamPlaybackOpenMPT</span>
+<span class="n">playback</span><span class="o">.</span><span class="n">set_tempo_factor</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span><span class="w">  </span><span class="c1"># Play 50% faster</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_tempo_factor">
+<span class="sig-name descname"><span class="pre">get_tempo_factor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#get_tempo_factor" title="Link to this definition"></a></dt>
+<dd><p>Get the current tempo factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current tempo multiplier</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="set_pitch_factor">
+<span class="sig-name descname"><span class="pre">set_pitch_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#set_pitch_factor" title="Link to this definition"></a></dt>
+<dd><p>Change the pitch without affecting tempo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>factor</strong> – Pitch multiplier (1.0 = normal, 2.0 = one octave up, 0.5 = one octave down)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_pitch_factor">
+<span class="sig-name descname"><span class="pre">get_pitch_factor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#get_pitch_factor" title="Link to this definition"></a></dt>
+<dd><p>Get the current pitch factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current pitch multiplier</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="pattern-navigation">
+<h4>Pattern Navigation<a class="headerlink" href="#pattern-navigation" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="get_current_order">
+<span class="sig-name descname"><span class="pre">get_current_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_current_order" title="Link to this definition"></a></dt>
+<dd><p>Get the current order index in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current order index</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_current_pattern">
+<span class="sig-name descname"><span class="pre">get_current_pattern</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_current_pattern" title="Link to this definition"></a></dt>
+<dd><p>Get the current pattern index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current pattern index</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="get_current_row">
+<span class="sig-name descname"><span class="pre">get_current_row</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#get_current_row" title="Link to this definition"></a></dt>
+<dd><p>Get the current row within the pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current row</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="set_position_order_row">
+<span class="sig-name descname"><span class="pre">set_position_order_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#set_position_order_row" title="Link to this definition"></a></dt>
+<dd><p>Jump to a specific order and row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>order</strong> – Order index to jump to</p></li>
+<li><p><strong>row</strong> – Row within the pattern</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">playback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">player</span><span class="o">.</span><span class="n">get_stream_playback</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AudioStreamPlaybackOpenMPT</span>
+<span class="n">playback</span><span class="o">.</span><span class="n">set_position_order_row</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="c1"># Jump to order 4, row 0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+<section id="inherited-methods">
+<h3>Inherited Methods<a class="headerlink" href="#inherited-methods" title="Link to this heading"></a></h3>
+<p>From AudioStreamPlayback:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_start(from_pos:</span> <span class="pre">float)</span></code> - Start playback</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_stop()</span></code> - Stop playback</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_is_playing()</span></code> - Check if playing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_get_loop_count()</span></code> - Get number of loops completed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_seek(time:</span> <span class="pre">float)</span></code> - Seek to time position</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting-started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, libopenmpt-godot Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

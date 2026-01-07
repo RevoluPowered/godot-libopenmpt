@@ -2,6 +2,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/audio_server.hpp>
 #include <libopenmpt/libopenmpt.h>
 #include <cstring>
 
@@ -44,7 +45,7 @@ void AudioStreamOpenMPT::_bind_methods() {
 
 AudioStreamOpenMPT::AudioStreamOpenMPT() {
     length = 0.0;
-    mix_rate = 48000;
+    mix_rate = 44100;  // Default to CD quality, will be overridden by AudioServer rate
 }
 
 AudioStreamOpenMPT::~AudioStreamOpenMPT() {
@@ -398,6 +399,12 @@ void AudioStreamPlaybackOpenMPT::_load_module() {
         return;
     }
 
+    // Use AudioServer's mix rate to ensure correct playback speed
+    AudioServer* audio_server = AudioServer::get_singleton();
+    if (audio_server) {
+        stream->mix_rate = (int)audio_server->get_mix_rate();
+    }
+
     openmpt_module_set_repeat_count(module, -1);
 }
 
@@ -442,16 +449,19 @@ void AudioStreamPlaybackOpenMPT::_seek(double p_time) {
     }
 }
 
-int AudioStreamPlaybackOpenMPT::_mix(AudioFrame *p_buffer, double p_rate_scale, int p_frames) {
+int32_t AudioStreamPlaybackOpenMPT::_mix(AudioFrame *p_buffer, float p_rate_scale, int32_t p_frames) {
     if (!module || !active) {
         return 0;
     }
 
+    // Allocate temporary buffers for left and right channels
     std::vector<float> left(p_frames);
     std::vector<float> right(p_frames);
 
+    // Read stereo audio - passing the actual Godot output sample rate
     size_t count = openmpt_module_read_float_stereo(module, stream->mix_rate, p_frames, left.data(), right.data());
 
+    // Copy to Godot's AudioFrame format
     for (size_t i = 0; i < count; i++) {
         p_buffer[i].left = left[i];
         p_buffer[i].right = right[i];
@@ -459,13 +469,11 @@ int AudioStreamPlaybackOpenMPT::_mix(AudioFrame *p_buffer, double p_rate_scale, 
 
     position = openmpt_module_get_position_seconds(module);
 
-    return count;
+    return (int32_t)count;
 }
 
 void AudioStreamPlaybackOpenMPT::_tag_used_streams() {
-    if (stream.is_valid()) {
-        stream->tag_used(0);
-    }
+    // Empty - Godot 4 handles stream tagging internally
 }
 
 void AudioStreamPlaybackOpenMPT::set_position(double p_position) {

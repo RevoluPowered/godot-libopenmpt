@@ -6,9 +6,9 @@ reloadable = true
 
 [libraries]
 
-macos.debug = "res://bin/libopenmpt.macos.template_debug.framework"
-macos.release = "res://bin/libopenmpt.macos.template_release.framework"
-windows.debug.x86_64 = "res://bin/libopenmpt.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "res://bin/libopenmpt.windows.template_release.x86_64.dll"
-linux.debug.x86_64 = "res://bin/libopenmpt.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "res://bin/libopenmpt.linux.template_release.x86_64.so"
+macos.debug = "libopenmpt.macos.template_debug.framework/libopenmpt.macos.template_debug"
+macos.release = "libopenmpt.macos.template_release.framework/libopenmpt.macos.template_release"
+windows.debug.x86_64 = "libopenmpt.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "libopenmpt.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "libopenmpt.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "libopenmpt.linux.template_release.x86_64.so"

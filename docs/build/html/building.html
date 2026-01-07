@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building from Source &mdash; libopenmpt-godot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing" href="testing.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            libopenmpt-godot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Building from Source</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-tools">Required Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-specific-requirements">Platform-Specific Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#clone-the-repository">Clone the Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-the-extension">Build the Extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-build">Basic Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-specific-builds">Platform-Specific Builds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-threaded-build">Multi-threaded Build</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-options">Build Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scons-command-line-options">SCons Command Line Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clean-build">Clean Build</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-unit-tests">Building Unit Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-compilation">Cross-Compilation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#macos-universal-binary">macOS Universal Binary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windows-cross-compilation-from-linux">Windows Cross-Compilation from Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-with-godot">Integration with Godot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#after-building">After Building</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-configuration">Build Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-build-settings">Custom Build Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#development-builds">Development Builds</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-the-extension">Debugging the Extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debug-build">Debug Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-with-godot-s-debug-build">Use with Godot’s Debug Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gdb-lldb-debugging">GDB/LLDB Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">libopenmpt-godot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Building from Source</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/building.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-from-source">
+<h1>Building from Source<a class="headerlink" href="#building-from-source" title="Link to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<section id="required-tools">
+<h3>Required Tools<a class="headerlink" href="#required-tools" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Git</strong> - For cloning the repository and submodules</p></li>
+<li><p><strong>Python 3.6+</strong> - Required by SCons</p></li>
+<li><p><strong>SCons 4.0+</strong> - Build system</p></li>
+<li><p><strong>C++17 Compiler</strong> - One of:</p>
+<ul>
+<li><p>GCC 7+ (Linux)</p></li>
+<li><p>Clang 6+ (macOS, Linux)</p></li>
+<li><p>MSVC 2017+ (Windows)</p></li>
+<li><p>MinGW-w64 (Windows alternative)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="platform-specific-requirements">
+<h3>Platform-Specific Requirements<a class="headerlink" href="#platform-specific-requirements" title="Link to this heading"></a></h3>
+<p><strong>Linux:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Debian/Ubuntu</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>git
+
+<span class="c1"># Install SCons</span>
+pip3<span class="w"> </span>install<span class="w"> </span>scons
+</pre></div>
+</div>
+<p><strong>macOS:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Xcode Command Line Tools</span>
+xcode-select<span class="w"> </span>--install
+
+<span class="c1"># Install SCons</span>
+pip3<span class="w"> </span>install<span class="w"> </span>scons
+</pre></div>
+</div>
+<p><strong>Windows:</strong></p>
+<ul class="simple">
+<li><p>Install Visual Studio 2017 or later with C++ support</p></li>
+<li><p>Install Python from python.org</p></li>
+<li><p>Install SCons: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">scons</span></code></p></li>
+<li><p>Or use MinGW-w64 as an alternative compiler</p></li>
+</ul>
+</section>
+</section>
+<section id="clone-the-repository">
+<h2>Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading"></a></h2>
+<p>Clone with all submodules:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/yourusername/libopenmpt-godot.git
+<span class="nb">cd</span><span class="w"> </span>libopenmpt-godot
+</pre></div>
+</div>
+<p>If you already cloned without <code class="docutils literal notranslate"><span class="pre">--recursive</span></code>, initialize submodules:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+</pre></div>
+</div>
+</section>
+<section id="build-the-extension">
+<h2>Build the Extension<a class="headerlink" href="#build-the-extension" title="Link to this heading"></a></h2>
+<section id="basic-build">
+<h3>Basic Build<a class="headerlink" href="#basic-build" title="Link to this heading"></a></h3>
+<p>Build a debug version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_debug
+</pre></div>
+</div>
+<p>Build a release version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+</pre></div>
+</div>
+<p>The compiled library will be placed in <code class="docutils literal notranslate"><span class="pre">demo/bin/</span></code>.</p>
+</section>
+<section id="platform-specific-builds">
+<h3>Platform-Specific Builds<a class="headerlink" href="#platform-specific-builds" title="Link to this heading"></a></h3>
+<p>Build for specific platform:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS</span>
+scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>macos<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+
+<span class="c1"># Windows (64-bit)</span>
+scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>windows<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+
+<span class="c1"># Linux (64-bit)</span>
+scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>linux<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+</pre></div>
+</div>
+</section>
+<section id="multi-threaded-build">
+<h3>Multi-threaded Build<a class="headerlink" href="#multi-threaded-build" title="Link to this heading"></a></h3>
+<p>Use multiple CPU cores for faster compilation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span>-j8<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">8</span></code> with your CPU core count.</p>
+</section>
+</section>
+<section id="build-options">
+<h2>Build Options<a class="headerlink" href="#build-options" title="Link to this heading"></a></h2>
+<section id="scons-command-line-options">
+<h3>SCons Command Line Options<a class="headerlink" href="#scons-command-line-options" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target=&lt;template_debug|template_release&gt;</span></code> - Build type</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platform=&lt;windows|macos|linux&gt;</span></code> - Target platform</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arch=&lt;x86_64|arm64&gt;</span></code> - Target architecture</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-j&lt;N&gt;</span></code> - Use N parallel build jobs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c</span></code> - Clean build artifacts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests=yes</span></code> - Build unit tests (see below)</p></li>
+</ul>
+</section>
+<section id="clean-build">
+<h3>Clean Build<a class="headerlink" href="#clean-build" title="Link to this heading"></a></h3>
+<p>Remove all build artifacts:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span>-c
+</pre></div>
+</div>
+</section>
+</section>
+<section id="building-unit-tests">
+<h2>Building Unit Tests<a class="headerlink" href="#building-unit-tests" title="Link to this heading"></a></h2>
+<p>Build the test executable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">tests</span><span class="o">=</span>yes<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_debug
+</pre></div>
+</div>
+<p>Run the tests:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./tests/run_tests
+</pre></div>
+</div>
+<p>The tests use the doctest framework and will output detailed results.</p>
+</section>
+<section id="cross-compilation">
+<h2>Cross-Compilation<a class="headerlink" href="#cross-compilation" title="Link to this heading"></a></h2>
+<section id="macos-universal-binary">
+<h3>macOS Universal Binary<a class="headerlink" href="#macos-universal-binary" title="Link to this heading"></a></h3>
+<p>Build for both Intel and Apple Silicon:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>macos<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>universal<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release
+</pre></div>
+</div>
+</section>
+<section id="windows-cross-compilation-from-linux">
+<h3>Windows Cross-Compilation from Linux<a class="headerlink" href="#windows-cross-compilation-from-linux" title="Link to this heading"></a></h3>
+<p>Install MinGW-w64:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mingw-w64
+</pre></div>
+</div>
+<p>Build for Windows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>windows<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release<span class="w"> </span><span class="nv">use_mingw</span><span class="o">=</span>yes
+</pre></div>
+</div>
+</section>
+</section>
+<section id="integration-with-godot">
+<h2>Integration with Godot<a class="headerlink" href="#integration-with-godot" title="Link to this heading"></a></h2>
+<section id="after-building">
+<h3>After Building<a class="headerlink" href="#after-building" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>The compiled library and <code class="docutils literal notranslate"><span class="pre">.gdextension</span></code> file are in <code class="docutils literal notranslate"><span class="pre">demo/bin/</span></code></p></li>
+<li><p>Copy the entire <code class="docutils literal notranslate"><span class="pre">demo/bin</span></code> folder to your Godot project</p></li>
+<li><p>Godot will automatically detect and load the extension</p></li>
+</ol>
+</section>
+<section id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Link to this heading"></a></h3>
+<p>In Godot’s script editor, check if the classes are available:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AudioStreamOpenMPT</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extension loaded: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<p><strong>“scons: command not found”</strong></p>
+<p>Install SCons:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>scons
+</pre></div>
+</div>
+<p><strong>Compilation errors about missing godot-cpp</strong></p>
+<p>Initialize submodules:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+</pre></div>
+</div>
+<p><strong>Errors about libopenmpt headers</strong></p>
+<p>Make sure the libopenmpt submodule is properly initialized:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>libopenmpt/libopenmpt/libopenmpt.hpp
+</pre></div>
+</div>
+<p>If the file doesn’t exist, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+</pre></div>
+</div>
+<p><strong>macOS: “cannot code sign” errors</strong></p>
+<p>Add to your build command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_release<span class="w"> </span><span class="nv">macos_disable_exception_handling</span><span class="o">=</span>no
+</pre></div>
+</div>
+<p><strong>Windows: “MSVC not found”</strong></p>
+<p>Ensure Visual Studio C++ tools are installed, or use MinGW:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">platform</span><span class="o">=</span>windows<span class="w"> </span><span class="nv">use_mingw</span><span class="o">=</span>yes
+</pre></div>
+</div>
+</section>
+</section>
+<section id="build-configuration">
+<h2>Build Configuration<a class="headerlink" href="#build-configuration" title="Link to this heading"></a></h2>
+<section id="custom-build-settings">
+<h3>Custom Build Settings<a class="headerlink" href="#custom-build-settings" title="Link to this heading"></a></h3>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">custom.py</span></code> file in the project root to customize build settings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># custom.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Custom defines</span>
+<span class="n">CPPDEFINES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MY_CUSTOM_DEFINE&quot;</span><span class="p">]</span>
+
+<span class="c1"># Custom include paths</span>
+<span class="n">CPPPATH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;/path/to/custom/includes&quot;</span><span class="p">]</span>
+
+<span class="c1"># Custom library paths</span>
+<span class="n">LIBPATH</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;/path/to/custom/libs&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This file is automatically loaded by SCons if it exists.</p>
+</section>
+<section id="development-builds">
+<h3>Development Builds<a class="headerlink" href="#development-builds" title="Link to this heading"></a></h3>
+<p>For development with debug symbols and faster compilation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_debug<span class="w"> </span><span class="nv">dev_build</span><span class="o">=</span>yes
+</pre></div>
+</div>
+<p>This enables:</p>
+<ul class="simple">
+<li><p>Debug symbols</p></li>
+<li><p>Less optimization</p></li>
+<li><p>Faster incremental builds</p></li>
+<li><p>More verbose output</p></li>
+</ul>
+</section>
+</section>
+<section id="debugging-the-extension">
+<h2>Debugging the Extension<a class="headerlink" href="#debugging-the-extension" title="Link to this heading"></a></h2>
+<section id="debug-build">
+<h3>Debug Build<a class="headerlink" href="#debug-build" title="Link to this heading"></a></h3>
+<p>Always use debug builds when developing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scons<span class="w"> </span><span class="nv">target</span><span class="o">=</span>template_debug
+</pre></div>
+</div>
+</section>
+<section id="use-with-godot-s-debug-build">
+<h3>Use with Godot’s Debug Build<a class="headerlink" href="#use-with-godot-s-debug-build" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Download Godot debug build</p></li>
+<li><p>Run from terminal to see output:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./Godot.app/Contents/MacOS/Godot<span class="w"> </span>--verbose
+</pre></div>
+</div>
+</section>
+<section id="gdb-lldb-debugging">
+<h3>GDB/LLDB Debugging<a class="headerlink" href="#gdb-lldb-debugging" title="Link to this heading"></a></h3>
+<p><strong>Linux (GDB):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gdb<span class="w"> </span>godot
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>run<span class="w"> </span>--path<span class="w"> </span>/path/to/project
+</pre></div>
+</div>
+<p><strong>macOS (LLDB):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lldb<span class="w"> </span>Godot.app/Contents/MacOS/Godot
+<span class="o">(</span>lldb<span class="o">)</span><span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>--path<span class="w"> </span>/path/to/project
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>When submitting changes:</p>
+<ol class="arabic simple">
+<li><p>Ensure both debug and release builds compile</p></li>
+<li><p>Run unit tests: <code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">tests=yes</span> <span class="pre">&amp;&amp;</span> <span class="pre">./tests/run_tests</span></code></p></li>
+<li><p>Test on your target platforms</p></li>
+<li><p>Follow existing code style</p></li>
+</ol>
+<p>See the project’s CONTRIBUTING.md for detailed guidelines.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="testing.html" class="btn btn-neutral float-right" title="Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, libopenmpt-godot Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

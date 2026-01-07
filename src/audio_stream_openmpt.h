@@ -92,8 +92,8 @@ public:
     int _get_loop_count() const override;
     double _get_playback_position() const override;
     void _seek(double p_time) override;
-    int _mix(AudioFrame *p_buffer, double p_rate_scale, int p_frames) override;
-    void _tag_used_streams();
+    int32_t _mix(AudioFrame *p_buffer, float p_rate_scale, int32_t p_frames) override;
+    void _tag_used_streams() override;
 
     // Custom methods
     void set_stream(const Ref<AudioStreamOpenMPT> &p_stream);
