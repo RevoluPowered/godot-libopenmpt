@@ -1,10 +1,10 @@
 # libopenmpt-godot
 
-[![Build Status](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/build.yml/badge.svg)](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/build.yml)
-[![Documentation](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/docs.yml/badge.svg)](https://github.com/RevoluPowered/libopenmpt-godot/actions/workflows/docs.yml)
+[![Build Status](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/build.yml/badge.svg)](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/build.yml)
+[![Documentation](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/docs.yml/badge.svg)](https://github.com/RevoluPowered/godot-libopenmpt/actions/workflows/docs.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**[📖 Documentation](https://revolutpowered.github.io/libopenmpt-godot/)** | **[🎵 Download](https://github.com/RevoluPowered/libopenmpt-godot/releases)**
+**[📖 Documentation](https://revolutpowered.github.io/godot-libopenmpt)** | **[🎵 Download](https://github.com/RevoluPowered/godot-libopenmpt/releases)**
 
 Play tracker music files in your Godot 4 game.
 
