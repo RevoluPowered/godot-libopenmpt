@@ -16,7 +16,7 @@ Tracker music is a type of music file format that was super popular in old DOS g
 
 **Famous games that used tracker music:**
 - Unreal (1998) - used .umx files (actually .it files)
-- Deus Ex - used tracker music
+- Deus Ex - used tracker files for their sound effects and music.
 - Many DOS games from the 90s
 
 **Examples of tracker music:**
