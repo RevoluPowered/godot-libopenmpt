@@ -42,10 +42,10 @@ jobs:
 
       - name: Install Godot 4.6
         run: |
-          wget https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6-stable_linux.x86_64.zip
-          unzip Godot_v4.6-stable_linux.x86_64.zip
-          chmod +x Godot_v4.6-stable_linux.x86_64
-          sudo mv Godot_v4.6-stable_linux.x86_64 /usr/local/bin/godot
+          wget https://godot-releases.nbg1.your-objectstorage.com/4.6-beta3/Godot_v4.6-beta3_linux.x86_64.zip
+          unzip Godot_v4.6-beta3_linux.x86_64.zip
+          chmod +x Godot_v4.6-beta3_linux.x86_64
+          sudo mv Godot_v4.6-beta3_linux.x86_64 /usr/local/bin/godot
 
       - name: Build with tests enabled
         run: scons target=template_debug arch=x86_64 tests=yes -j$(nproc)
