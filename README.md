@@ -19,6 +19,11 @@ Tracker music is a type of music file format that was super popular in old DOS g
 - Deus Ex - used tracker music
 - Many DOS games from the 90s
 
+**Examples of tracker music:**
+- https://www.youtube.com/watch?v=ErGf-yLXiLs
+- https://www.youtube.com/watch?v=L6l-gfttJ6E
+
+
 ## How to Get It
 
 ### Download (Easiest!)
