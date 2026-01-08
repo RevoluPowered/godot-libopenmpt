@@ -28,16 +28,37 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: github.event_name == 'pull_request' || github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Build and run tests in Docker
+      - name: Install dependencies
         run: |
-          docker build -f tests/Dockerfile -t libopenmpt-godot-tests .
-          docker run --rm libopenmpt-godot-tests
+          sudo apt-get update
+          sudo apt-get install -y build-essential scons wget unzip
+
+      - name: Install Godot 4.6
+        run: |
+          wget https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6-stable_linux.x86_64.zip
+          unzip Godot_v4.6-stable_linux.x86_64.zip
+          chmod +x Godot_v4.6-stable_linux.x86_64
+          sudo mv Godot_v4.6-stable_linux.x86_64 /usr/local/bin/godot
+
+      - name: Build with tests enabled
+        run: scons target=template_debug arch=x86_64 tests=yes -j$(nproc)
+
+      - name: Setup test environment
+        run: |
+          mkdir -p tests/bin
+          cp demo/bin/libopenmpt.gdextension tests/bin/
+          cp demo/bin/*.so tests/bin/
+
+      - name: Run tests
+        timeout-minutes: 2
+        run: godot --headless --path tests --script test_runner.gd --verbose
 
   build-linux:
     runs-on: ubuntu-latest

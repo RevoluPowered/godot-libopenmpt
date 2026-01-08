@@ -3,8 +3,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'libopenmpt-godot'
-copyright = '2026, libopenmpt-godot Contributors'
-author = 'libopenmpt-godot Contributors'
+copyright = '2026, Gordon MacPherson'
+author = 'Gordon MacPherson'
 release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
