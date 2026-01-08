@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AudioStreamOpenMPT" inherits="AudioStream" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		AudioStream for playing tracker music files (MOD, XM, S3M, IT, and 40+ formats).
+	</brief_description>
+	<description>
+		AudioStream implementation that uses libopenmpt to play tracker music files. Tracker music was popular in retro games and the demoscene, storing patterns of notes and samples instead of raw audio data.
+		Supports 50+ tracker formats including MOD (Amiga ProTracker), XM (FastTracker II), S3M (ScreamTracker 3), IT (Impulse Tracker), and many more.
+		[codeblock]
+		var stream = AudioStreamOpenMPT.new()
+		stream.load_from_file("res://music/song.mod")
+
+		var player = AudioStreamPlayer.new()
+		add_child(player)
+		player.stream = stream
+		player.play()
+
+		# Get playback control (must be playing first)
+		var playback = player.get_stream_playback() as AudioStreamPlaybackOpenMPT
+		playback.set_tempo_factor(1.5)  # Speed up
+		[/codeblock]
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_artist" qualifiers="const">
+			<return type="String" />
+			<description>
+				Returns the artist/author name from the module metadata, or an empty string if not available.
+			</description>
+		</method>
+		<method name="get_channel_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<description>
+				Returns an array of channel names defined in the module.
+			</description>
+		</method>
+		<method name="get_instrument_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<description>
+				Returns an array of instrument names defined in the module.
+			</description>
+		</method>
+		<method name="get_message" qualifiers="const">
+			<return type="String" />
+			<description>
+				Returns the song message or comment from the module metadata, or an empty string if not available.
+			</description>
+		</method>
+		<method name="get_num_channels" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the number of channels in the module.
+			</description>
+		</method>
+		<method name="get_num_instruments" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the number of instruments in the module.
+			</description>
+		</method>
+		<method name="get_num_orders" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the number of orders (song positions) in the module. Orders define the sequence of patterns to play.
+			</description>
+		</method>
+		<method name="get_num_patterns" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the number of patterns in the module.
+			</description>
+		</method>
+		<method name="get_num_samples" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the number of samples in the module.
+			</description>
+		</method>
+		<method name="get_sample_names" qualifiers="const">
+			<return type="PackedStringArray" />
+			<description>
+				Returns an array of sample names defined in the module.
+			</description>
+		</method>
+		<method name="get_title" qualifiers="const">
+			<return type="String" />
+			<description>
+				Returns the song title from the module metadata, or an empty string if not available.
+			</description>
+		</method>
+		<method name="load_from_data">
+			<return type="int" enum="Error" />
+			<param index="0" name="data" type="PackedByteArray" />
+			<description>
+				Loads tracker music from a PackedByteArray. Returns [constant OK] on success, or an error code on failure.
+				Useful for loading modules from memory or downloaded content.
+			</description>
+		</method>
+		<method name="load_from_file">
+			<return type="int" enum="Error" />
+			<param index="0" name="path" type="String" />
+			<description>
+				Loads a tracker music file from the given path. Returns [constant OK] on success, or an error code on failure.
+				Supported formats: MOD, XM, S3M, IT, MPTM, and 40+ other tracker formats.
+				[codeblock]
+				var stream = AudioStreamOpenMPT.new()
+				var error = stream.load_from_file("res://music/song.mod")
+				if error != OK:
+					push_error("Failed to load module")
+				[/codeblock]
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="data" type="PackedByteArray" setter="set_data" getter="get_data" default="PackedByteArray()">
+			The raw module data as a PackedByteArray.
+		</member>
+		<member name="mix_rate" type="int" setter="set_mix_rate" getter="get_mix_rate" default="44100">
+			The sample rate for audio playback. Automatically set to match AudioServer's mix rate.
+		</member>
+	</members>
+</class>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ResourceLoaderOpenMPT" inherits="ResourceFormatLoader" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Resource loader for tracker music files.
+	</brief_description>
+	<description>
+		Handles automatic loading of tracker music files (MOD, XM, S3M, IT, etc.) as [AudioStreamOpenMPT] resources when imported into Godot.
+		This class is registered automatically and you don't need to interact with it directly. Simply place tracker music files in your project and they will be imported as [AudioStreamOpenMPT] resources.
+	</description>
+	<tutorials>
+	</tutorials>
+</class>

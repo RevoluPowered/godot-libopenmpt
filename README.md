@@ -53,15 +53,14 @@ pip install scons
 scons target=template_release
 ```
 
-Files will appear in `demo/bin/`.
+Files will appear in `addons/libopenmpt/`.
 
 #### Copy Plugin to Your Game
 
-After building, copy it to your project:
+After building, copy the entire folder to your project:
 
 ```bash
-mkdir -p MyGame/addons/libopenmpt/
-cp -r demo/bin/* MyGame/addons/libopenmpt/
+cp -r addons/libopenmpt MyGame/addons/
 ```
 
 (Replace `MyGame` with your actual project folder name)
@@ -86,9 +85,18 @@ That's it! Your tracker music is now playing.
 
 ### Cool Stuff You Can Do
 
+**Important:** You need to start playback before you can control it!
+
+```gdscript
+# Start playing first
+player.play()
+
+# Now get the playback object
+var playback = player.get_stream_playback() as AudioStreamPlaybackOpenMPT
+```
+
 **Speed up or slow down the music:**
 ```gdscript
-var playback = player.get_stream_playback()
 playback.set_tempo_factor(1.5)  # 50% faster
 playback.set_tempo_factor(0.5)  # Half speed
 ```

@@ -8,7 +8,10 @@ reloadable = true
 
 macos.debug = "libopenmpt.macos.template_debug.framework/libopenmpt.macos.template_debug"
 macos.release = "libopenmpt.macos.template_release.framework/libopenmpt.macos.template_release"
+macos.editor = "libopenmpt.macos.editor.framework/libopenmpt.macos.editor"
 windows.debug.x86_64 = "libopenmpt.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "libopenmpt.windows.template_release.x86_64.dll"
+windows.editor.x86_64 = "libopenmpt.windows.editor.x86_64.dll"
 linux.debug.x86_64 = "libopenmpt.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "libopenmpt.linux.template_release.x86_64.so"
+linux.editor.x86_64 = "libopenmpt.linux.editor.x86_64.so"

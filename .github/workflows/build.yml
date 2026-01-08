@@ -53,8 +53,8 @@ jobs:
       - name: Setup test environment
         run: |
           mkdir -p tests/bin
-          cp demo/bin/libopenmpt.gdextension tests/bin/
-          cp demo/bin/*.so tests/bin/
+          cp addons/libopenmpt/libopenmpt.gdextension tests/bin/
+          cp addons/libopenmpt/*.so tests/bin/
 
       - name: Run tests
         timeout-minutes: 2
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libopenmpt-godot-linux-${{ matrix.arch }}-${{ matrix.target }}
-          path: demo/bin/*.so
+          path: addons/libopenmpt/*.so
 
   build-windows:
     runs-on: windows-latest
@@ -121,7 +121,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libopenmpt-godot-windows-${{ matrix.arch }}-${{ matrix.target }}
-          path: demo/bin/*.dll
+          path: addons/libopenmpt/*.dll
 
   build-macos:
     runs-on: macos-latest
@@ -146,7 +146,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libopenmpt-godot-macos-${{ matrix.arch }}-${{ matrix.target }}
-          path: demo/bin/*.framework
+          path: addons/libopenmpt/*.framework
 
   package-release:
     needs: [build-linux, build-windows, build-macos]
@@ -162,14 +162,17 @@ jobs:
 
       - name: Package release
         run: |
-          mkdir -p release/addons/libopenmpt/bin
+          mkdir -p release/addons/libopenmpt
 
-          # Copy gdextension file
-          cp demo/bin/libopenmpt.gdextension release/addons/libopenmpt/bin/
+          # Copy gdextension file and doc_classes
+          cp addons/libopenmpt/libopenmpt.gdextension release/addons/libopenmpt/
+          if [ -d addons/libopenmpt/doc_classes ]; then
+            cp -r addons/libopenmpt/doc_classes release/addons/libopenmpt/
+          fi
 
           # Copy all built libraries
-          find artifacts -type f \( -name "*.so" -o -name "*.dll" \) -exec cp {} release/addons/libopenmpt/bin/ \;
-          find artifacts -type d -name "*.framework" -exec cp -r {} release/addons/libopenmpt/bin/ \;
+          find artifacts -type f \( -name "*.so" -o -name "*.dll" \) -exec cp {} release/addons/libopenmpt/ \;
+          find artifacts -type d -name "*.framework" -exec cp -r {} release/addons/libopenmpt/ \;
 
           # Copy README and LICENSE
           cp README.md release/addons/libopenmpt/

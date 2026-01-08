@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AudioStreamPlaybackOpenMPT" inherits="AudioStreamPlayback" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Playback control for AudioStreamOpenMPT.
+	</brief_description>
+	<description>
+		Provides playback control for tracker music, including tempo/pitch control, looping, and pattern navigation.
+		[b]Important:[/b] This object is only available after calling [method AudioStreamPlayer.play]. Call [method AudioStreamPlayer.get_stream_playback] to get the instance.
+		[codeblock]
+		var player = AudioStreamPlayer.new()
+		player.stream = stream
+		player.play()
+
+		# Now get playback control
+		var playback = player.get_stream_playback() as AudioStreamPlaybackOpenMPT
+		playback.set_tempo_factor(1.5)  # 50% faster
+		playback.set_repeat_count(-1)   # Loop forever
+		[/codeblock]
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_current_order" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the current order (song position) being played.
+			</description>
+		</method>
+		<method name="get_current_pattern" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the current pattern being played.
+			</description>
+		</method>
+		<method name="get_current_row" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the current row within the pattern being played.
+			</description>
+		</method>
+		<method name="get_pitch_factor" qualifiers="const">
+			<return type="float" />
+			<description>
+				Returns the current pitch factor. Default is 1.0 (normal pitch).
+			</description>
+		</method>
+		<method name="get_position" qualifiers="const">
+			<return type="float" />
+			<description>
+				Returns the current playback position in seconds.
+			</description>
+		</method>
+		<method name="get_repeat_count" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns the current repeat count. -1 means loop forever, 0 means play once, positive values mean play that many times.
+			</description>
+		</method>
+		<method name="get_tempo_factor" qualifiers="const">
+			<return type="float" />
+			<description>
+				Returns the current tempo factor. Default is 1.0 (normal speed).
+			</description>
+		</method>
+		<method name="set_pitch_factor">
+			<return type="void" />
+			<param index="0" name="factor" type="float" />
+			<description>
+				Sets the pitch factor. Values above 1.0 increase pitch, below 1.0 decrease pitch.
+				[codeblock]
+				playback.set_pitch_factor(1.5)  # 50% higher pitch
+				playback.set_pitch_factor(0.8)  # 20% lower pitch
+				[/codeblock]
+			</description>
+		</method>
+		<method name="set_position">
+			<return type="void" />
+			<param index="0" name="position" type="float" />
+			<description>
+				Sets the playback position in seconds.
+			</description>
+		</method>
+		<method name="set_position_order_row">
+			<return type="void" />
+			<param index="0" name="order" type="int" />
+			<param index="1" name="row" type="int" />
+			<description>
+				Jumps to a specific order (song position) and row within that order's pattern.
+				[codeblock]
+				playback.set_position_order_row(4, 0)  # Jump to order 4, row 0
+				print("Now at pattern: ", playback.get_current_pattern())
+				[/codeblock]
+			</description>
+		</method>
+		<method name="set_repeat_count">
+			<return type="void" />
+			<param index="0" name="count" type="int" />
+			<description>
+				Sets how many times the module should repeat. Use -1 for infinite looping, 0 to play once, or a positive number to play that many times.
+				[codeblock]
+				playback.set_repeat_count(-1)  # Loop forever
+				playback.set_repeat_count(3)   # Play 3 times then stop
+				playback.set_repeat_count(0)   # Play once
+				[/codeblock]
+			</description>
+		</method>
+		<method name="set_tempo_factor">
+			<return type="void" />
+			<param index="0" name="factor" type="float" />
+			<description>
+				Sets the tempo factor. Values above 1.0 speed up playback, below 1.0 slow it down.
+				[codeblock]
+				playback.set_tempo_factor(1.5)  # 50% faster
+				playback.set_tempo_factor(0.5)  # Half speed
+				[/codeblock]
+			</description>
+		</method>
+	</methods>
+</class>

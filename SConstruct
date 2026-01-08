@@ -203,17 +203,25 @@ if build_tests:
     # Add test interface sources
     lib_sources.extend(["tests/test_interface.cpp", "tests/test_audio_stream.cpp"])
 
+# Add documentation for Godot 4.3+
+if env["target"] in ["editor", "template_debug"]:
+    try:
+        doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
+        lib_sources.append(doc_data)
+    except AttributeError:
+        print("Not including class reference as we're targeting a pre-4.3 baseline.")
+
 # Create the library
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "demo/bin/libopenmpt.{}.{}.framework/libopenmpt.{}.{}".format(
+        "addons/libopenmpt/libopenmpt.{}.{}.framework/libopenmpt.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=lib_sources,
     )
 else:
     library = env.SharedLibrary(
-        "demo/bin/libopenmpt{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "addons/libopenmpt/libopenmpt{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=lib_sources,
     )
 
