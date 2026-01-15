@@ -16,20 +16,8 @@ Tracker music is a type of music file format that was super popular in old DOS g
 
 **Famous games that used tracker music:**
 - Unreal (1998) - used .umx files (actually .it files)
-- Deus Ex - used tracker files for their sound effects and music.
+- Deus Ex - used tracker music
 - Many DOS games from the 90s
-
-**Examples of tracker music:**
-- https://www.youtube.com/watch?v=ErGf-yLXiLs
-- https://www.youtube.com/watch?v=L6l-gfttJ6E
-
-**Why?**
-- Trackers still remain as an amazing way to make music in games and sound effect boards, it makes it easy to build out sound scapes for your games.
-- Did you know? Deus Ex 1 used trackers for the entire SFX board in the game, and provides the tracker files as part of the games, they used it for the main theme music too.
-
-**How do I make my own tracker music?**
-- Great question, check out https://openmpt.org/ this is a tool for windows but works fine on wine on mac and linux.
-
 
 ## How to Get It
 
@@ -41,20 +29,6 @@ Tracker music is a type of music file format that was super popular in old DOS g
 4. Restart Godot
 
 Done! Skip to the "How to Use" section below.
-
-### Using gd-plug
-
-If you use [gd-plug](https://github.com/imjp94/gd-plug) to manage your Godot plugins, add this to your `plug.gd`:
-
-```gdscript
-plug("RevoluPowered/libopenmpt-godot")
-```
-
-Then run:
-
-```bash
-godot --headless -s plug.gd install
-```
 
 ### Build It Yourself
 
