@@ -65,7 +65,7 @@ jobs:
     strategy:
       matrix:
         arch: [x86_64]
-        target: [template_debug, template_release]
+        target: [template_debug, template_release, editor]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -91,7 +91,7 @@ jobs:
     strategy:
       matrix:
         arch: [x86_64]
-        target: [template_debug, template_release]
+        target: [template_debug, template_release, editor]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -128,7 +128,7 @@ jobs:
     strategy:
       matrix:
         arch: [universal]
-        target: [template_debug, template_release]
+        target: [template_debug, template_release, editor]
     steps:
       - uses: actions/checkout@v4
         with:
