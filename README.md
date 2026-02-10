@@ -47,13 +47,17 @@ Done! Skip to the "How to Use" section below.
 If you use [gd-plug](https://github.com/imjp94/gd-plug) to manage your Godot plugins, add this to your `plug.gd`:
 
 ```gdscript
-plug("RevoluPowered/libopenmpt-godot")
+plug("RevoluPowered/godot-libopenmpt")
 ```
 
 Then run:
 
 ```bash
+# Linux/Windows (if godot is in PATH)
 godot --headless -s plug.gd install
+
+# macOS
+/Applications/Godot.app/Contents/MacOS/Godot --headless -s plug.gd install
 ```
 
 ### Build It Yourself

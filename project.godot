@@ -22,3 +22,7 @@ config/icon="res://icon.svg"
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/vest/plugin.cfg")
