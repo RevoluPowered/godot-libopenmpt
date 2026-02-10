@@ -7,3 +7,6 @@
 [submodule "tests/doctest"]
 	path = tests/doctest
 	url = https://github.com/doctest/doctest.git
+[submodule "addons/vest"]
+	path = addons/vest
+	url = https://github.com/foxssake/vest.git

@@ -38,3 +38,12 @@ mono_crash.*.json
 
 # Compilation database
 compile_commands.json
+
+# Test fixtures (downloaded at CI time)
+tests/fixtures/*.mod
+tests/fixtures/*.xm
+tests/fixtures/*.it
+tests/fixtures/*.s3m
+
+# Vest test reports
+vest-report.tap

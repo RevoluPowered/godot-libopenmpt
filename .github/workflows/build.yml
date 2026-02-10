@@ -60,6 +60,55 @@ jobs:
         timeout-minutes: 2
         run: godot --headless --path tests --script test_runner.gd --verbose
 
+  vest-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential scons wget unzip
+
+      - name: Install Godot 4.6
+        run: |
+          wget https://godot-releases.nbg1.your-objectstorage.com/4.6-beta3/Godot_v4.6-beta3_linux.x86_64.zip
+          unzip Godot_v4.6-beta3_linux.x86_64.zip
+          chmod +x Godot_v4.6-beta3_linux.x86_64
+          sudo mv Godot_v4.6-beta3_linux.x86_64 /usr/local/bin/godot
+
+      - name: Build extension
+        run: scons target=editor arch=x86_64 -j$(nproc)
+
+      - name: Download test fixtures
+        run: |
+          mkdir -p tests/fixtures
+          wget -O tests/fixtures/crazy_heavy_crash_boom.mod "https://api.modarchive.org/downloads.php?moduleid=81574"
+          ls -la tests/fixtures/
+
+      - name: Import Godot project
+        timeout-minutes: 1
+        run: godot --headless --import . || true
+
+      - name: Run vest tests
+        timeout-minutes: 2
+        run: |
+          godot --headless -s addons/vest/cli/vest-cli.gd \
+            --vest-glob "tests/vest/**/*.test.gd" \
+            --vest-report-format tap \
+            --vest-report-file vest-report.tap
+          echo "--- TAP Report ---"
+          cat vest-report.tap
+          if grep -q "^not ok" vest-report.tap; then
+            echo "FAIL: Some vest tests failed"
+            exit 1
+          fi
+          echo "All vest tests passed"
+
   build-linux:
     runs-on: ubuntu-latest
     strategy:
